@@ -14,7 +14,7 @@
                     {{#each users}}
                     <option value="{{this.id}}">{{this.name}}</option>
                     {{/each}}
-                </optgroup>                
+                </optgroup>
             </select>
         </div>
         <div class="form-group">
@@ -26,7 +26,7 @@
         {{#each actors}}
             <div class="lmrtfy-actor" data-id="{{this.id}}">
                 <input type="checkbox" name="actor-{{this.id}}" id="lmrtf-actor-{{this.id}}" data-dtype="Boolean" {{#if (lmrtfy-controlledToken this)}}checked{{/if}} />
-                <label for="lmrtf-actor-{{this.id}}">                
+                <label for="lmrtf-actor-{{this.id}}">
                 {{#if (lmrtfy-showTokenImage this)}}<img src="{{this.prototypeToken.texture.src}}" />{{else}}<img src="{{this.img}}" />{{/if}}
                 </label>
             </div>
@@ -37,7 +37,7 @@
     <fieldset>
         <div class="form-group">
             <label>{{localize "LMRTFY.Modifiers"}}</label>
-            
+
             <select name="advantage" data-dtype="Number">
                 <option value="0">{{localize "LMRTFY.NormalRoll"}}</option>
                 <option value="1">{{localize "LMRTFY.AdvantageRoll"}}</option>
@@ -46,8 +46,8 @@
             </select>
 
             <select name="mode" data-dtype="String">
-                {{#each rollModes as |name mode|}}
-                <option value="{{mode}}">{{localize name}}</option>
+                {{#each rollModes as |data mode|}}
+                <option value="{{mode}}">{{localize data.label}}</option>
                 {{/each}}
             </select>
         </div>
@@ -73,7 +73,7 @@
         <div class="form-group">
             <label>{{localize "LMRTFY.DC"}}</label>
             <input type="number" name="dc" value="" placeholder="20" data-dtype="Integer"/>
-            
+
             <label>&nbsp;{{localize "LMRTFY.Visibility"}}</label>
             <select name="visibility" data-dtype="String">
                 <option value="gm" selected>{{localize "USER.RoleGamemaster"}}</option>
@@ -87,13 +87,13 @@
     <fieldset>
         <div class="form-group">
             <label>{{localize "LMRTFY.Extras"}}</label>
-                
+
             <div class="lmrtfy-extras">
                 {{#if specialRolls.initiative}}
                 <div class="lmrtfy-extra-initiative">
                     <input type="checkbox" name="extra-initiative" id="lmrtf-extra-initiative" data-dtype="Boolean" />
                     <label for="lmrtf-extra-initiative">{{localize "LMRTFY.Initiative"}}</label>
-                    
+
                 </div>
                 {{/if}}
                 {{#if specialRolls.deathsave}}
@@ -109,7 +109,7 @@
                 </div>
                 {{/if}}
             </div>
-        </div>        
+        </div>
     </fieldset>
 
     <fieldset>
@@ -122,7 +122,7 @@
             <div>
                 <div class="lmrtfy-dice-tray-buttons flexrow lmrtfy-dice-row-flexrow">
                     <!-- d4 -->
-                    <div class="lmrtfy-dice-tray-button" data-value="d4">                
+                    <div class="lmrtfy-dice-tray-button" data-value="d4">
                         <svg class="lmrtfy-dice-svg-normal" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                             viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve">
                             <g>
@@ -142,7 +142,7 @@
                         </svg>
                     </div>
                     <!-- d8 -->
-                    <div class="lmrtfy-dice-tray-button" data-value="d8">                
+                    <div class="lmrtfy-dice-tray-button" data-value="d8">
                         <svg class="lmrtfy-dice-svg-normal" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                             viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve">
                             <g>
@@ -156,7 +156,7 @@
                         </svg>
                     </div>
                     <!-- d10 -->
-                    <div class="lmrtfy-dice-tray-button" data-value="d10">                
+                    <div class="lmrtfy-dice-tray-button" data-value="d10">
                         <svg class="lmrtfy-dice-svg-normal" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                             viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve">
                             <g>
@@ -171,7 +171,7 @@
                         </svg>
                     </div>
                     <!-- d12 -->
-                    <div class="lmrtfy-dice-tray-button" data-value="d12">                
+                    <div class="lmrtfy-dice-tray-button" data-value="d12">
                         <svg class="lmrtfy-dice-svg-normal" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                             viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve">
                             <g>
@@ -185,7 +185,7 @@
                         </svg>
                     </div>
                     <!-- d20 -->
-                    <div class="lmrtfy-dice-tray-button" data-value="d20">                
+                    <div class="lmrtfy-dice-tray-button" data-value="d20">
                         <svg class="lmrtfy-dice-svg-normal" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                             viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve">
                             <g transform="translate(-246.69456,-375.66745)">
@@ -204,7 +204,7 @@
                         </svg>
                     </div>
                     <!-- d100 -->
-                    <div class="lmrtfy-dice-tray-button" data-value="d100">                
+                    <div class="lmrtfy-dice-tray-button" data-value="d100">
                         <svg class="lmrtfy-dice-svg-normal lmrtfy-dice-svg-smaller" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                             viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve">
                             <g>
@@ -244,7 +244,7 @@
                         {{#each abilityModifiers as |name key|}}
                         <div class="lmrtfy-ability">
                             <input type="checkbox" class="lmrtfy-formula-ability" name="lmrtfy-formula-{{key}}" id="lmrtfy-formula-{{key}}" data-value="{{key}}" />
-                            <label for="lmrtfy-formula-{{key}}">{{localize name}}</label>                
+                            <label for="lmrtfy-formula-{{key}}">{{localize name}}</label>
                         </div>
                         {{/each}}
                     </div>
@@ -253,19 +253,19 @@
                     <button type="button" class="lmrtfy-clear-formula" name="lmrtfy-clear-custom" value="1"><i class="fas fa-pump-soap"></i>{{localize "LMRTFY.ClearCustomFormula"}}</button>
                 </div>
             </div>
-        </details>        
+        </details>
     </fieldset>
- 
+
     <fieldset>
     <div class="form-group">
         <label>{{localize "LMRTFY.AbilityChecks"}}</label>
-        
+
         <div class="lmrtfy-ability-checks">
             {{#each abilities as |name key|}}
             <div class="lmrtfy-ability">
                 <input type="checkbox" name="check-{{key}}" id="lmrtf-check-{{key}}" data-dtype="Boolean" />
                 <label for="lmrtf-check-{{key}}">{{localize name}}</label>
-                
+
             </div>
             {{/each}}
         </div>
@@ -275,12 +275,12 @@
     <fieldset>
     <div class="form-group">
         <label>{{localize "LMRTFY.SavingThrows"}}</label>
-        
+
         <div class="lmrtfy-saving-throws">
             {{#each saves as |name key|}}
             <div class="lmrtfy-ability">
                 <input type="checkbox" name="save-{{key}}" id="lmrtf-save-{{key}}" data-dtype="Boolean" />
-                <label for="lmrtf-save-{{key}}">{{localize name}}</label>            
+                <label for="lmrtf-save-{{key}}">{{localize name}}</label>
             </div>
             {{/each}}
         </div>

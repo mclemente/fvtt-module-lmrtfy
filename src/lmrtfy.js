@@ -212,7 +212,7 @@ class LMRTFY {
                 LMRTFY.abilityModifiers = {};
                 LMRTFY.canFailChecks = game.settings.get('lmrtfy', 'showFailButtons'); // defaulted to false due to system
                 break;
-            
+
             case 'foundry-chromatic-dungeons':
                 LMRTFY.saveRollMethod = 'saveRoll';
                 LMRTFY.abilityRollMethod = 'attributeRoll';
@@ -224,7 +224,7 @@ class LMRTFY {
                 LMRTFY.specialRolls = {};
                 LMRTFY.canFailChecks = game.settings.get('lmrtfy', 'showFailButtons'); // defaulted to false due to system
                 break;
-                
+
             case 'degenesis':
                 LMRTFY.skillRollMethod = 'rollSkill';
 
@@ -238,7 +238,7 @@ class LMRTFY {
                 LMRTFY.abilityModifiers = LMRTFY.parseAbilityModifiers();
                 LMRTFY.canFailChecks = game.settings.get('lmrtfy', 'showFailButtons'); // defaulted to false due to system
                 break;
-                
+
             case 'ffd20':
                 LMRTFY.saveRollMethod = 'rollSavingThrow';
                 LMRTFY.abilityRollMethod = 'rollAbilityTest';
@@ -314,11 +314,11 @@ class LMRTFY {
 
         return abilityMods;
     }
-    
+
     static create5eAbilities() {
         let abbr = {};
-        
-        for (let key in CONFIG.DND5E.abilities) { 
+
+        for (let key in CONFIG.DND5E.abilities) {
             let abb = game.i18n.localize(CONFIG.DND5E.abilities[key].abbreviation);
             let upperFirstLetter = abb.charAt(0).toUpperCase() + abb.slice(1);
             abbr[`${abb}`] = `DND5E.Ability${upperFirstLetter}`;
@@ -335,7 +335,7 @@ class LMRTFY {
         } else if (!["character", "tokens"].includes(data.user) && data.user !== game.user.id) {
             return;
         }
-        
+
         let actors = [];
         if (data.user === "character") {
             actors = [game.user.character];
@@ -345,11 +345,11 @@ class LMRTFY {
             actors = data.actors.map(aid => LMRTFY.fromUuid(aid));
         }
         actors = actors.filter(a => a);
-        
+
         // remove player characters from GM's requests
         if (game.user.isGM) {
             actors = actors.filter(a => !a.hasPlayerOwner);
-        }        
+        }
         if (actors.length === 0) return;
         new LMRTFYRoller(actors, data).render(true);
     }
@@ -371,19 +371,15 @@ class LMRTFY {
             LMRTFY.requestor.setPosition({ width: "auto", height: "auto" })
     }
 
-    static getSceneControlButtons(buttons) {
-        let tokenButton = buttons.find(b => b.name == "token")
-
-        if (tokenButton) {
-            tokenButton.tools.push({
-                name: "request-roll",
-                title: game.i18n.localize('LMRTFY.ControlTitle'),
-                icon: "fas fa-dice-d20",
-                visible: game.user.isGM,
-                onClick: () => LMRTFY.requestRoll(),
-                button: true
-            });
-        }
+    static getSceneControlButtons(controls) {
+        controls.tokens.tools.lmrtfy = {
+            name: "lmrtfy",
+            title: game.i18n.localize('LMRTFY.ControlTitle'),
+            icon: "fas fa-dice-d20",
+            visible: game.user.isGM,
+            onClick: () => LMRTFY.requestRoll(),
+            button: true
+        };
     }
 
     static buildAbilityModifier(actor, ability) {
@@ -395,7 +391,7 @@ class LMRTFY {
         [`${ability}-based`, 'ability-check', 'all'].forEach((key) => {
             (actor.synthetics.statisticsModifier[key] || []).forEach((m) => modifiers.push(m.clone()));
         });
-        
+
         return new game.pf2e.StatisticModifier(`${game.i18n.localize('LMRTFY.AbilityCheck')} ${game.i18n.localize(mod.label)}`, modifiers);
     }
 

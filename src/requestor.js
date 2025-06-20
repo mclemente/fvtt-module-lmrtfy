@@ -4,19 +4,10 @@ class LMRTFYRequestor extends FormApplication {
     constructor(...args) {
         super(...args)
         game.users.apps.push(this);
-        
+
         this.selectedDice = [];
         this.selectedModifiers = [];
-        this.dice = [
-            'd3',
-            'd4',
-            'd6',
-            'd8',
-            'd10',
-            'd12',
-            'd20',
-            'd100'
-        ];
+        this.dice = Object.keys(CONFIG.Dice.fulfillment.dice);
 
         this.diceFormula = '';
         this.bonusFormula = '';
@@ -32,7 +23,7 @@ class LMRTFYRequestor extends FormApplication {
                 break;
             case "demonlord":
                 template = "modules/lmrtfy/templates/demonlord-request-rolls.html";
-                break;                
+                break;
             default:
                 template = "modules/lmrtfy/templates/request-rolls.html";
                 break;
@@ -104,7 +95,7 @@ class LMRTFYRequestor extends FormApplication {
         if (force !== true && !action) return;
         return super.render(force, context);
     }
-    
+
     activateListeners(html) {
         super.activateListeners(html);
         this.element.find(".select-all").click((event) => this.setActorSelection(event, true));
@@ -116,8 +107,8 @@ class LMRTFYRequestor extends FormApplication {
         this.element.find(".lmrtfy-dice-tray-button").contextmenu(this.diceRightClick.bind(this));
         this.element.find(".lmrtfy-bonus-button").click(this.bonusClick.bind(this));
         this.element.find(".lmrtfy-formula-ability").click(this.modifierClick.bind(this));
-        this.element.find(".lmrtfy-clear-formula").click(this.clearCustomFormula.bind(this));        
-        if ((game.system.id) === "demonlord") this.element.find(".demonlord").change(this.clearDemonLordSettings.bind(this));        
+        this.element.find(".lmrtfy-clear-formula").click(this.clearCustomFormula.bind(this));
+        if ((game.system.id) === "demonlord") this.element.find(".demonlord").change(this.clearDemonLordSettings.bind(this));
         this._onUserChange();
     }
 
@@ -200,7 +191,7 @@ class LMRTFYRequestor extends FormApplication {
     bonusClick(event) {
         let bonus = event?.currentTarget?.dataset?.value;
         let newBonus = +(this.bonusFormula.trim().replace(' ', '')) + +bonus;
-        
+
         if (newBonus === 0) {
             this.bonusFormula = '';
         } else {
@@ -219,7 +210,7 @@ class LMRTFYRequestor extends FormApplication {
             const index = this.selectedModifiers.indexOf(event?.currentTarget?.dataset?.value);
             this.selectedModifiers.splice(index, 1);
         }
-        
+
         this.modifierFormula = this.convertSelectedModifiersToFormula();
         this.combineFormula();
     }
@@ -241,10 +232,10 @@ class LMRTFYRequestor extends FormApplication {
                 }
 
                 formula += count + die;
-            }            
+            }
         }
 
-        return formula;        
+        return formula;
     }
 
     convertSelectedModifiersToFormula() {
@@ -262,7 +253,7 @@ class LMRTFYRequestor extends FormApplication {
             formula += `@${mod}`;
         }
 
-        return formula;        
+        return formula;
     }
 
     combineFormula() {
@@ -276,7 +267,7 @@ class LMRTFYRequestor extends FormApplication {
 
             if (this.bonusFormula?.length) {
                 customFormula += this.bonusFormula;
-            }            
+            }
         } else {
             this.element.find(".custom-formula").val('');
         }
@@ -315,7 +306,7 @@ class LMRTFYRequestor extends FormApplication {
         const keys = Object.keys(formData)
         const user_actors = this._getUserActorIds(formData.user).map(id => `actor-${id}`);
         const actors = keys.filter(k => k.startsWith("actor-")).reduce((acc, k) => {
-            if (formData[k] && user_actors.includes(k)) 
+            if (formData[k] && user_actors.includes(k))
                 acc.push(k.slice(6));
             return acc;
         }, []);
@@ -347,7 +338,7 @@ class LMRTFYRequestor extends FormApplication {
              (
                 !message &&
                 abilities.length === 0 && saves.length === 0 && skills.length === 0 &&
-                formula.length === 0 && 
+                formula.length === 0 &&
                 !formData['extra-death-save'] && !formData['extra-initiative'] && !formData['extra-perception'] &&
                 tables?.length === 0
             )
@@ -372,7 +363,7 @@ class LMRTFYRequestor extends FormApplication {
             BBDice = formData.BBDice;
             AddMod = formData.AddMod;
         }
-    
+
         const socketData = {
             user: formData.user,
             actors,
@@ -396,9 +387,9 @@ class LMRTFYRequestor extends FormApplication {
         }
         if (game.system.id === 'demonlord') {
             socketData['BBDice'] = BBDice;
-            socketData['AddMod'] = AddMod;            
+            socketData['AddMod'] = AddMod;
         }
-        
+
         if (saveAsMacro) {
             let selectedSection = '';
             if (socketData.user === 'selected') {
